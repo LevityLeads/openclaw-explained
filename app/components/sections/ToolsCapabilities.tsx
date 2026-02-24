@@ -5,14 +5,18 @@ import SectionWrapper from "../SectionWrapper";
 import GlossaryTerm from "../GlossaryTerm";
 
 const tools = [
-  { name: "exec", icon: "⚡", desc: "Run shell commands", example: 'exec("npm install framer-motion")' },
-  { name: "read/write", icon: "📄", desc: "Read & write files", example: 'read("package.json")' },
-  { name: "web_search", icon: "🔍", desc: "Search the web", example: 'web_search("next.js 15 docs")' },
-  { name: "web_fetch", icon: "🌐", desc: "Fetch & extract pages", example: 'web_fetch("https://docs.example.com")' },
-  { name: "browser", icon: "🖥️", desc: "Control a browser via CDP", example: 'browser.navigate("https://...")' },
-  { name: "message", icon: "💬", desc: "Send messages", example: 'message.send({ target: "#general" })' },
-  { name: "nodes", icon: "📱", desc: "Control paired devices", example: 'nodes.camera_snap({ facing: "front" })' },
-  { name: "canvas", icon: "🎨", desc: "Present live HTML", example: 'canvas.present({ url: "..." })' },
+  { name: "exec (shell)", icon: "⚡", desc: "Runs terminal commands, just like you would in a command line. Install packages, run scripts, deploy code, manage git. This is how the AI actually does things on the computer.", example: 'exec("npm install framer-motion")' },
+  { name: "read / write / edit", icon: "📄", desc: "Reads, creates, and edits files. The AI can look at your code, write new files, or make precise changes to existing ones. It sees the file system like a developer would.", example: 'read("package.json")' },
+  { name: "web_search", icon: "🔍", desc: "Searches the internet using Brave Search. The AI can research topics, find documentation, check current information, all without you having to paste links.", example: 'web_search("next.js 15 docs")' },
+  { name: "web_fetch", icon: "🌐", desc: "Fetches a webpage and extracts the readable content as text. Like opening a URL and reading it, but the AI gets clean markdown instead of raw HTML.", example: 'web_fetch("https://docs.example.com")' },
+  { name: "browser", icon: "🖥️", desc: "Controls a real web browser: click buttons, fill forms, take screenshots, navigate pages. Uses Chrome DevTools Protocol (CDP) to automate anything you could do manually.", example: 'browser.navigate("https://...")' },
+  { name: "message", icon: "💬", desc: "Sends messages to your connected chat platforms (Discord, Telegram, WhatsApp, etc). Can also create polls, react to messages, manage channels.", example: 'message.send({ target: "#general" })' },
+  { name: "nodes", icon: "📱", desc: "Controls paired devices like your phone or other computers. Can take photos, record screens, get location, run commands remotely. Your devices become the AI's hands.", example: 'nodes.camera_snap({ facing: "front" })' },
+  { name: "canvas", icon: "🎨", desc: "Presents interactive HTML pages that the AI can edit in real-time. Think of it as a live preview window the AI can paint on.", example: 'canvas.present({ url: "..." })' },
+  { name: "cron", icon: "⏰", desc: "Schedules tasks to run later or on a repeating schedule. Set reminders, run daily reports, check inboxes every hour. The AI's alarm clock.", example: 'cron.add({ schedule: "every 30m" })' },
+  { name: "memory_search", icon: "🧠", desc: "Searches through the AI's memory files to recall past conversations, decisions, and context. This is how the AI remembers things across sessions.", example: 'memory_search("GoTyme proposal")' },
+  { name: "sessions_spawn", icon: "🔀", desc: "Creates a new sub-agent to handle a task in parallel. Like hiring a specialist contractor. The sub-agent reports back when done.", example: 'sessions_spawn({ task: "Build website" })' },
+  { name: "image", icon: "👁️", desc: "Analyzes images using a vision model. Can read screenshots, understand diagrams, describe photos, or extract text from images.", example: 'image({ path: "screenshot.png" })' },
 ];
 
 const sandboxModes = [
@@ -77,20 +81,22 @@ export default function ToolsCapabilities() {
           )}
 
           {/* Tool cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {tools.map((tool, i) => (
               <motion.div
                 key={tool.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
                 className="glow-card bg-card border border-white/5 rounded-2xl p-5 hover:border-teal/20 transition-all group"
               >
-                <div className="text-2xl mb-3">{tool.icon}</div>
-                <div className="text-white font-medium text-sm mb-1">{tool.name}</div>
-                <div className="text-gray-500 text-xs mb-3">{tool.desc}</div>
-                <code className="text-teal/50 text-[10px] group-hover:text-teal/80 transition-colors break-all">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-2xl">{tool.icon}</span>
+                  <span className="text-white font-medium text-sm">{tool.name}</span>
+                </div>
+                <div className="text-gray-400 text-sm leading-relaxed mb-3">{tool.desc}</div>
+                <code className="text-teal/40 text-[10px] group-hover:text-teal/70 transition-colors break-all">
                   {tool.example}
                 </code>
               </motion.div>

@@ -38,8 +38,8 @@ const tree: TreeNode = {
 };
 
 function TreeVisualization() {
-  const nodeW = 110, nodeH = 32, gapX = 130, gapY = 80;
-  const svgW = 580, svgH = 300;
+  const nodeW = 120, nodeH = 32, gapX = 160, gapY = 80;
+  const svgW = 760, svgH = 300;
 
   type Pos = { x: number; y: number; label: string; color: string; parentX?: number; parentY?: number };
   const nodes: Pos[] = [];
@@ -58,10 +58,10 @@ function TreeVisualization() {
 
       if (child.children) {
         const l2Count = child.children.length;
-        const l2Start = cx - ((l2Count - 1) * 70) / 2;
+        const l2Start = cx - ((l2Count - 1) * 100) / 2;
         child.children.forEach((gc, j) => {
           nodes.push({
-            x: l2Start + j * 70, y: cy + gapY,
+            x: l2Start + j * 100, y: cy + gapY,
             label: gc.label, color: gc.color, parentX: cx, parentY: cy,
           });
         });
@@ -71,7 +71,7 @@ function TreeVisualization() {
 
   return (
     <div className="flex justify-center overflow-x-auto">
-      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full max-w-xl">
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full max-w-3xl">
         {nodes.filter(n => n.parentX !== undefined).map((n, i) => (
           <motion.line
             key={`line-${i}`}

@@ -16,7 +16,7 @@ const timelineEvents = [
 ];
 
 const memoryFiles = [
-  { name: "MEMORY.md", desc: "Long-term curated knowledge", icon: "🧠", color: "cyan" },
+  { name: "MEMORY.md", desc: "Long-term curated knowledge", icon: "🧠", color: "teal" },
   { name: "memory/2026-02-24.md", desc: "Today's raw logs", icon: "📝", color: "blue" },
   { name: "HEARTBEAT.md", desc: "Periodic check config", icon: "💓", color: "purple" },
   { name: "heartbeat-state.json", desc: "Last heartbeat state", icon: "⚡", color: "yellow" },
@@ -31,9 +31,9 @@ export default function SessionsMemory() {
       subtitle="Every conversation is a session. Every session remembers."
     >
       {(isSimple) => (
-        <div className="space-y-10">
+        <div className="space-y-12">
           {isSimple ? (
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
+            <p className="text-gray-400 text-lg leading-relaxed">
               Each chat you have with the AI is a <GlossaryTerm term="session">session</GlossaryTerm> — a separate
               conversation with its own history. The AI also has different types of memory: a daily journal, a long-term
               diary (<GlossaryTerm term="memory.md">MEMORY.md</GlossaryTerm>), and periodic check-ins called{" "}
@@ -42,42 +42,42 @@ export default function SessionsMemory() {
               <GlossaryTerm term="context window">context window</GlossaryTerm>.
             </p>
           ) : (
-            <div className="space-y-3">
-              <p className="text-gray-300 leading-relaxed max-w-2xl">
+            <div className="space-y-4">
+              <p className="text-gray-400 leading-relaxed">
                 Each <GlossaryTerm term="session">session</GlossaryTerm> is isolated with key format{" "}
-                <code className="text-cyan-300 bg-cyan-900/30 px-1 rounded">agent:&lt;agentId&gt;:&lt;mainKey&gt;</code>.
+                <code className="text-teal bg-teal/10 px-1.5 py-0.5 rounded-md text-xs">agent:&lt;agentId&gt;:&lt;mainKey&gt;</code>.
                 The <GlossaryTerm term="agent loop">agent loop</GlossaryTerm> runs serialized per session (session lane)
                 with an optional global lane. <GlossaryTerm term="compaction">Compaction</GlossaryTerm> triggers on
                 context overflow.
               </p>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 font-mono text-sm text-gray-400">
-                <div className="text-gray-500 mb-1"># Session key examples</div>
-                <div>agent:<span className="text-cyan-400">main</span>:<span className="text-blue-400">discord:channel:1234567890</span></div>
-                <div>agent:<span className="text-cyan-400">main</span>:<span className="text-blue-400">whatsapp:chat:27821234567</span></div>
-                <div>agent:<span className="text-cyan-400">main</span>:<span className="text-blue-400">subagent:a1b2c3d4</span></div>
+              <div className="bg-card border border-white/5 rounded-2xl p-5 font-mono text-sm text-gray-400">
+                <div className="text-gray-600 mb-2"># Session key examples</div>
+                <div>agent:<span className="text-teal">main</span>:<span className="text-blue-400">discord:channel:1234567890</span></div>
+                <div>agent:<span className="text-teal">main</span>:<span className="text-blue-400">whatsapp:chat:27821234567</span></div>
+                <div>agent:<span className="text-teal">main</span>:<span className="text-blue-400">subagent:a1b2c3d4</span></div>
               </div>
             </div>
           )}
 
           {/* Timeline */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Session Timeline</h3>
+            <h3 className="text-white font-semibold mb-5 text-lg">Session Timeline</h3>
             <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-px bg-gray-800" />
+              <div className="absolute left-4 top-0 bottom-0 w-px bg-white/5" />
               {timelineEvents.map((evt, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="flex items-center gap-4 mb-3 pl-2"
                 >
-                  <div className={`w-3 h-3 rounded-full z-10 ${
+                  <div className={`w-3 h-3 rounded-full z-10 ring-4 ring-dark ${
                     evt.type === "tool" ? "bg-yellow-500" :
                     evt.type === "heartbeat" ? "bg-purple-500" :
                     evt.type === "inference" ? "bg-blue-500" :
-                    "bg-cyan-500"
+                    "bg-teal"
                   }`} />
                   <span className="text-gray-600 font-mono text-xs w-12">{evt.time}</span>
                   <span className="text-gray-300 text-sm">{evt.label}</span>
@@ -88,20 +88,20 @@ export default function SessionsMemory() {
 
           {/* Memory files */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Memory System</h3>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <h3 className="text-white font-semibold mb-5 text-lg">Memory System</h3>
+            <div className="grid sm:grid-cols-2 gap-4">
               {memoryFiles.map((file, i) => (
                 <motion.div
                   key={file.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-cyan-500/30 transition-colors"
+                  transition={{ delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="glow-card bg-card border border-white/5 rounded-2xl p-5 hover:border-teal/20 transition-colors"
                 >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span>{file.icon}</span>
-                    <code className="text-cyan-400 text-sm">{file.name}</code>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg">{file.icon}</span>
+                    <code className="text-teal text-sm font-medium">{file.name}</code>
                   </div>
                   <p className="text-gray-500 text-sm">{file.desc}</p>
                 </motion.div>

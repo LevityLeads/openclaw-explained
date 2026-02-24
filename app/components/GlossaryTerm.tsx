@@ -32,7 +32,7 @@ export default function GlossaryTerm({ term, children }: GlossaryTermProps) {
       onMouseLeave={() => setShow(false)}
       onTouchStart={() => setShow(!show)}
     >
-      <span className="text-cyan-400 border-b border-dotted border-cyan-400/50 cursor-help">
+      <span className="text-teal border-b border-dotted border-teal/40 cursor-help hover:border-teal/70 transition-colors">
         {children ?? entry.term}
       </span>
       <AnimatePresence>
@@ -42,11 +42,11 @@ export default function GlossaryTerm({ term, children }: GlossaryTermProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className={`absolute z-50 w-72 p-3 rounded-lg bg-gray-900 border border-cyan-500/30 shadow-lg shadow-cyan-500/10 text-sm text-gray-200 left-1/2 -translate-x-1/2 ${
+            className={`absolute z-50 w-80 p-4 rounded-2xl bg-card border border-white/10 shadow-2xl shadow-black/50 text-sm left-1/2 -translate-x-1/2 ${
               above ? "bottom-full mb-2" : "top-full mt-2"
             }`}
           >
-            <div className="font-semibold text-cyan-400 mb-1">{entry.term}</div>
+            <div className="font-semibold text-teal mb-1.5 text-xs uppercase tracking-wider">{entry.term}</div>
             <div className="text-gray-300 leading-relaxed">{entry.simple}</div>
           </motion.div>
         )}

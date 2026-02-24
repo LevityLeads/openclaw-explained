@@ -23,17 +23,17 @@ const sandboxModes = [
 
 function ToolCallExample() {
   return (
-    <div className="bg-gray-900/80 border border-gray-800 rounded-lg overflow-hidden">
-      <div className="px-4 py-2 bg-gray-800/50 border-b border-gray-800 flex items-center gap-2">
+    <div className="bg-card border border-white/5 rounded-2xl overflow-hidden">
+      <div className="px-5 py-3 bg-white/[0.02] border-b border-white/5 flex items-center gap-2">
         <div className="w-2 h-2 rounded-full bg-yellow-500" />
-        <span className="text-xs text-gray-400 font-mono">Tool Execution Flow</span>
+        <span className="text-xs text-gray-500 font-mono">Tool Execution Flow</span>
       </div>
-      <div className="p-4 font-mono text-sm space-y-2">
+      <div className="p-5 font-mono text-sm space-y-2">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
           <span className="text-yellow-500">▶ tool_start</span>
           <span className="text-gray-500"> web_search</span>
         </motion.div>
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="pl-4 text-gray-500">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="pl-4 text-gray-600">
           query: &quot;framer motion scroll animations&quot;
         </motion.div>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.8 }}>
@@ -41,7 +41,7 @@ function ToolCallExample() {
           <span className="text-gray-500"> 5 results found</span>
         </motion.div>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1.1 }}>
-          <span className="text-green-500">✓ tool_end</span>
+          <span className="text-teal">✓ tool_end</span>
           <span className="text-gray-500"> 340ms</span>
         </motion.div>
       </div>
@@ -58,16 +58,16 @@ export default function ToolsCapabilities() {
       subtitle="The agent can DO things — not just talk about them."
     >
       {(isSimple) => (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {isSimple ? (
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
+            <p className="text-gray-400 text-lg leading-relaxed">
               Your AI isn&apos;t just a chatbot — it has <GlossaryTerm term="tool">tools</GlossaryTerm>. It can run
               code, search the web, control a browser, read and write files, send messages, and even take photos with
               your phone. Each tool runs inside a safe{" "}
               <GlossaryTerm term="sandbox">sandbox</GlossaryTerm> so it can&apos;t accidentally break anything.
             </p>
           ) : (
-            <p className="text-gray-300 leading-relaxed max-w-2xl">
+            <p className="text-gray-400 leading-relaxed">
               <GlossaryTerm term="tool">Tools</GlossaryTerm> are executable capabilities with{" "}
               <GlossaryTerm term="streaming">streamed</GlossaryTerm> events (start/update/end). They run in Docker{" "}
               <GlossaryTerm term="sandbox">sandboxes</GlossaryTerm> with configurable scope (session/agent/shared)
@@ -77,20 +77,20 @@ export default function ToolsCapabilities() {
           )}
 
           {/* Tool cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {tools.map((tool, i) => (
               <motion.div
                 key={tool.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="bg-gray-900/50 border border-gray-800 rounded-lg p-3 hover:border-cyan-500/30 transition-all group"
+                transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                className="glow-card bg-card border border-white/5 rounded-2xl p-5 hover:border-teal/20 transition-all group"
               >
-                <div className="text-2xl mb-2">{tool.icon}</div>
-                <div className="text-white font-medium text-sm">{tool.name}</div>
-                <div className="text-gray-500 text-xs mb-2">{tool.desc}</div>
-                <code className="text-cyan-400/60 text-[10px] group-hover:text-cyan-400 transition-colors break-all">
+                <div className="text-2xl mb-3">{tool.icon}</div>
+                <div className="text-white font-medium text-sm mb-1">{tool.name}</div>
+                <div className="text-gray-500 text-xs mb-3">{tool.desc}</div>
+                <code className="text-teal/50 text-[10px] group-hover:text-teal/80 transition-colors break-all">
                   {tool.example}
                 </code>
               </motion.div>
@@ -102,15 +102,15 @@ export default function ToolsCapabilities() {
           {/* Sandbox modes */}
           {!isSimple && (
             <div>
-              <h3 className="text-white font-semibold mb-3">Sandbox Modes</h3>
-              <div className="grid sm:grid-cols-3 gap-3">
+              <h3 className="text-white font-semibold mb-4 text-lg">Sandbox Modes</h3>
+              <div className="grid sm:grid-cols-3 gap-4">
                 {sandboxModes.map((s) => (
-                  <div key={s.mode} className="bg-gray-900/50 border border-gray-800 rounded-lg p-3">
-                    <div className="flex items-center gap-2 mb-1">
+                  <div key={s.mode} className="bg-card border border-white/5 rounded-2xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
                       <span>{s.risk}</span>
-                      <code className="text-cyan-400 text-sm">{s.mode}</code>
+                      <code className="text-teal text-sm font-medium">{s.mode}</code>
                     </div>
-                    <p className="text-gray-500 text-xs">{s.desc}</p>
+                    <p className="text-gray-500 text-sm">{s.desc}</p>
                   </div>
                 ))}
               </div>

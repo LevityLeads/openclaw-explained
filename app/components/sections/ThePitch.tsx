@@ -14,10 +14,10 @@ const messages = [
 function PhoneMockup({ app, children }: { app: string; children: React.ReactNode }) {
   return (
     <div className="w-full max-w-xs mx-auto">
-      <div className="rounded-[2rem] border-2 border-gray-700 bg-gray-900/80 p-2 shadow-2xl shadow-cyan-500/5">
-        <div className="rounded-[1.5rem] bg-[#0a0a0f] overflow-hidden">
-          <div className="bg-gray-800/80 px-4 py-2 flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-cyan-500" />
+      <div className="rounded-[2rem] border border-white/10 bg-card p-2 shadow-2xl shadow-black/30">
+        <div className="rounded-[1.5rem] bg-dark overflow-hidden">
+          <div className="bg-white/5 px-4 py-2.5 flex items-center gap-2 border-b border-white/5">
+            <div className="w-2 h-2 rounded-full bg-teal" />
             <span className="text-xs text-gray-400 font-medium">{app}</span>
             <span className="text-xs text-gray-600 ml-auto">OpenClaw Agent</span>
           </div>
@@ -34,12 +34,12 @@ function ChatBubble({ from, text, delay }: { from: string; text: string; delay: 
     <motion.div
       initial={{ opacity: 0, x: isUser ? 20 : -20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.4 }}
+      transition={{ delay, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={`flex ${isUser ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm ${
-          isUser ? "bg-blue-600 text-white rounded-br-md" : "bg-gray-800 text-gray-200 rounded-bl-md"
+        className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
+          isUser ? "bg-teal/20 text-teal rounded-br-md" : "bg-white/5 text-gray-200 rounded-bl-md"
         }`}
       >
         {text}
@@ -57,16 +57,16 @@ export default function ThePitch() {
       subtitle="You message your AI from any app. It messages back."
     >
       {(isSimple) => (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {isSimple ? (
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
-              Imagine texting an AI assistant that works across <em>all</em> your messaging apps — WhatsApp, Telegram,
+            <p className="text-gray-400 text-lg leading-relaxed">
+              Imagine texting an AI assistant that works across <em className="text-gray-300 not-italic">all</em> your messaging apps — WhatsApp, Telegram,
               Discord, Slack, Signal, iMessage. You don&apos;t need a special app. Just message it wherever you already
               are. It reads your messages, thinks, acts, and replies. That&apos;s{" "}
-              <span className="text-cyan-400 font-semibold">OpenClaw</span>.
+              <span className="text-teal font-semibold">OpenClaw</span>.
             </p>
           ) : (
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
+            <p className="text-gray-400 text-lg leading-relaxed">
               OpenClaw&apos;s <GlossaryTerm term="gateway">Gateway</GlossaryTerm> connects to messaging platforms via
               protocol-specific adapters (<GlossaryTerm term="baileys">Baileys</GlossaryTerm> for WhatsApp,{" "}
               <GlossaryTerm term="grammy">grammY</GlossaryTerm> for Telegram, native APIs for Discord/Slack/Signal).
@@ -77,7 +77,7 @@ export default function ThePitch() {
             </p>
           )}
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             <PhoneMockup app="WhatsApp">
               {messages.slice(0, 2).map((m, i) => (
                 <ChatBubble key={i} from={m.from} text={m.text} delay={i * 0.5} />
@@ -94,7 +94,7 @@ export default function ThePitch() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="text-center text-gray-500 text-sm"
+            className="text-center text-gray-600 text-sm"
           >
             Same AI. Different apps. One conversation.
           </motion.div>

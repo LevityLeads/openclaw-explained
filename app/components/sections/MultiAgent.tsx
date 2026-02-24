@@ -12,7 +12,7 @@ interface TreeNode {
 
 const tree: TreeNode = {
   label: "Main Agent",
-  color: "#06b6d4",
+  color: "#5CE5D5",
   children: [
     {
       label: "Build Website",
@@ -41,7 +41,6 @@ function TreeVisualization() {
   const nodeW = 110, nodeH = 32, gapX = 130, gapY = 80;
   const svgW = 580, svgH = 300;
 
-  // Flatten tree for rendering
   type Pos = { x: number; y: number; label: string; color: string; parentX?: number; parentY?: number };
   const nodes: Pos[] = [];
 
@@ -78,7 +77,7 @@ function TreeVisualization() {
             key={`line-${i}`}
             x1={n.parentX} y1={(n.parentY ?? 0) + nodeH / 2}
             x2={n.x} y2={n.y - nodeH / 2 + 4}
-            stroke={n.color} strokeWidth={1.5} opacity={0.4}
+            stroke={n.color} strokeWidth={1} opacity={0.3}
             initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }}
             viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
           />
@@ -89,12 +88,12 @@ function TreeVisualization() {
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 + i * 0.08 }}
+            transition={{ delay: 0.2 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
             <rect
               x={n.x - nodeW / 2} y={n.y - nodeH / 2}
-              width={nodeW} height={nodeH} rx={8}
-              fill={n.color + "15"} stroke={n.color} strokeWidth={1.5}
+              width={nodeW} height={nodeH} rx={12}
+              fill={n.color + "10"} stroke={n.color} strokeWidth={1}
             />
             <text
               x={n.x} y={n.y + 4} textAnchor="middle"
@@ -118,9 +117,9 @@ export default function MultiAgent() {
       subtitle="One agent spawns others. Work fans out, results flow back."
     >
       {(isSimple) => (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {isSimple ? (
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
+            <p className="text-gray-400 text-lg leading-relaxed">
               When a task is too big or too slow for one AI, the main{" "}
               <GlossaryTerm term="agent">agent</GlossaryTerm> can create{" "}
               <GlossaryTerm term="sub-agent">sub-agents</GlossaryTerm> — helpers that work on specific pieces
@@ -129,24 +128,22 @@ export default function MultiAgent() {
               <GlossaryTerm term="zombie children">zombie children</GlossaryTerm> until they&apos;re cleaned up.
             </p>
           ) : (
-            <div className="space-y-3">
-              <p className="text-gray-300 leading-relaxed max-w-2xl">
+            <div className="space-y-4">
+              <p className="text-gray-400 leading-relaxed">
                 Each <GlossaryTerm term="agent">agent</GlossaryTerm> has its own{" "}
                 <GlossaryTerm term="workspace">workspace</GlossaryTerm>, state directory, and{" "}
                 <GlossaryTerm term="session">session</GlossaryTerm> store.{" "}
                 <GlossaryTerm term="auth profile">Auth profiles</GlossaryTerm> are per-agent.{" "}
                 <GlossaryTerm term="binding">Bindings</GlossaryTerm> route messages with priority: peer match &gt;
-                guildId &gt; accountId &gt; channel &gt; fallback. Agents can be fully isolated with different{" "}
-                <GlossaryTerm term="tool">tools</GlossaryTerm>,{" "}
-                <GlossaryTerm term="sandbox">sandboxes</GlossaryTerm>, and models.
+                guildId &gt; accountId &gt; channel &gt; fallback.
               </p>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 font-mono text-sm text-gray-400">
-                <div className="text-gray-500 mb-1"># Binding priority</div>
-                <div>1. <span className="text-cyan-400">peer match</span> → exact user/chat match</div>
+              <div className="bg-card border border-white/5 rounded-2xl p-5 font-mono text-sm text-gray-400">
+                <div className="text-gray-600 mb-2"># Binding priority</div>
+                <div>1. <span className="text-teal">peer match</span> → exact user/chat match</div>
                 <div>2. <span className="text-blue-400">guildId</span> → server/group match</div>
                 <div>3. <span className="text-purple-400">accountId</span> → account-level match</div>
                 <div>4. <span className="text-yellow-400">channel</span> → platform match</div>
-                <div>5. <span className="text-gray-500">fallback</span> → catch-all</div>
+                <div>5. <span className="text-gray-600">fallback</span> → catch-all</div>
               </div>
             </div>
           )}
